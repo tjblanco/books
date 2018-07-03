@@ -76,7 +76,7 @@ class BookShelf extends Component {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="book-title">{book.name}</div>
+                                    <div className="book-title">{book.title}</div>
                                     <div className="book-authors">{book.author}</div>
                                 </div>
                             </li>

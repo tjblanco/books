@@ -7,19 +7,16 @@ import BookShelf from './BookShelf.jsx'
 
 class BooksApp extends React.Component {
     state = {
-      books: []
+
     }
-    // componentDidMount() {
-    //     books.get().then((books) => {
-    //         this.setState({books})
-    //     })
-    // }
   render() {
     return (
 
       <div className="app">
 
-        <Route path='/search' component={Search}/>
+        <Route path='/search' render={() => (
+            <Search />
+        )}/>
 
         <Route exact path='/' render={() => (
             <div className="list-books">
