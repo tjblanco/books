@@ -14,8 +14,13 @@ class BookShelf extends Component {
                         {this.props.books.filter(book => book.shelf === this.props.shelf).map((book) => (
                             <li key={book.title}>
                                 <div className="book">
+
                                     <div className="book-top">
-                                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.url})` }}></div>
+                                        {book.imageLinks ?
+                                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div> :
+
+                                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(http://via.placeholder.com/128x193?text=?)'}}></div>
+                                        }
                                         < BookControl controlShelf={(book,value) => (this.sendChange(book,value))} book={book}/>
                                     </div>
                                     <div className="book-title">{book.title}</div>

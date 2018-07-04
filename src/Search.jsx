@@ -10,33 +10,17 @@ class Search extends Component {
     }
 
     updateQuery = (query) => {
-        if(query.length){
-            this.setState({query})
+        if(query.length > 0){
             BooksAPI.search(query).then((books) => {
-                if(books.length){
-                    this.setState({showingBooks: books})
-                }else{
-                    this.setState({showingBooks: []})
-                }
+                books.length > 0 ? this.setState({showingBooks: books,query:query}) : this.setState({showingBooks: []})
             })
         }else{
             this.setState({showingBooks: []})
         }
     }
 
-    // sendChange = (book,value) => {
-    //     let link
-    //     book.imageLinks ? link = book.imageLinks.thumbnail : link = 'http://via.placeholder.com/128x193?text=?)'
-    //     let newBook = {
-    //         title: book.title,
-    //         author: book.authors,
-    //         url: link
-    //     }
-    //     this.props.changeShelf(newBook, value)
-    // }
-
     render() {
-        let {query,showingBooks} = this.state
+
         return (
             <div className="search-books">
                 <div className="search-books-bar">
@@ -54,14 +38,15 @@ class Search extends Component {
                             type="text"
                             placeholder="Search by title or author"
                             onChange={(event) => this.updateQuery(event.target.value)}
+                            autoFocus="true"
                         />
 
                     </div>
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        {showingBooks.map((book) => (
-                            <li key={book.title}>
+                        {this.state.showingBooks.map((book) => (
+                            <li >
                                 <div className="book">
                                     <div className="book-top">
                                         {book.imageLinks ?
@@ -69,7 +54,6 @@ class Search extends Component {
 
                                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(http://via.placeholder.com/128x193?text=?)'}}></div>
                                         }
-                                        {book.shelf= 'none'}
                                         <BookControl controlShelf={(book,value) => (this.props.sendChange(book,value))}  book={book}/>
                                     </div>
                                     <div className="book-title">{book.title}</div>
