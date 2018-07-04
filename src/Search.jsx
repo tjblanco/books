@@ -10,13 +10,28 @@ class Search extends Component {
     }
 
     updateQuery = (query) => {
-        if(query.length > 0){
+        if(query.length > 0){ // If the user type something...
+            // look for the books
             BooksAPI.search(query).then((books) => {
-                books.length > 0 ? this.setState({showingBooks: books,query:query}) : this.setState({showingBooks: []})
+                if (books.length > 0){
+                    // set the correct shelf value
+                    books.map((book,idx) => {
+                        books[idx].shelf = 'none'
+                        this.props.currentBooks.map((b) => {
+                            if(b.id === book.id){
+                                books[idx].shelf = b.shelf
+                            }
+                        })
+                    })
+                    this.setState({showingBooks: books,query:query})
+                } else { // To prevent errors when any book is retrieved
+                    this.setState({showingBooks: []})
+                }
             })
         }else{
             this.setState({showingBooks: []})
         }
+
     }
 
     render() {
@@ -46,9 +61,10 @@ class Search extends Component {
                 <div className="search-books-results">
                     <ol className="books-grid">
                         {this.state.showingBooks.map((book) => (
-                            <li >
+                            <li key={book.id}>
                                 <div className="book">
                                     <div className="book-top">
+                                        {/* To avoid errors when book doesn't have image */}
                                         {book.imageLinks ?
                                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div> :
 

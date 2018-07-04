@@ -9,8 +9,7 @@ class BooksApp extends React.Component {
     state = { books: [] }
 
     componentDidMount() {
-
-        // get books on load
+        // Retrieve books on load
         BooksAPI.getAll().then((books) => {
             this.setState({books})
         })
@@ -31,7 +30,9 @@ class BooksApp extends React.Component {
 
         <Route path='/search' render={({history}) => (
             <Search
+                currentBooks={this.state.books}
                 sendChange={(book,value) => {
+                    console.log(value)
                     this.changeShelf(book, value)
                     history.push('/')
                 }} />

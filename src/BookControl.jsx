@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 class BookControl extends Component {
     manageClick(e) {
         e.preventDefault()
+        // Send option selected
         this.props.controlShelf(this.props.book,e.target.value)
     }
     render() {
