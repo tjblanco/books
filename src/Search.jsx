@@ -6,7 +6,8 @@ import BookControl from './BookControl.jsx'
 class Search extends Component {
     state = {
         query: '',
-        showingBooks: []
+        showingBooks: [],
+        noMatch: false
     }
 
     updateQuery = (query) => {
@@ -23,13 +24,13 @@ class Search extends Component {
                             }
                         })
                     })
-                    this.setState({showingBooks: books,query:query})
+                    this.setState({showingBooks: books,query:query, noMatch: false})
                 } else { // To prevent errors when any book is retrieved
-                    this.setState({showingBooks: []})
+                    this.setState({showingBooks: [], noMatch: true})
                 }
             })
         }else{
-            this.setState({showingBooks: []})
+            this.setState({showingBooks: [], noMatch: false})
         }
 
     }
@@ -78,6 +79,13 @@ class Search extends Component {
                             </li>
                         ))}
                     </ol>
+                    { this.state.noMatch  && (
+                        <div>
+                            <div>
+                                <h3> Sorry, we don't have the book you are looking for! Please, try again.</h3>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         )

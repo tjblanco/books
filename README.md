@@ -13,7 +13,9 @@ This is a bookshelf app that allows you to select and categorize books you have 
 ## Install
 
 * Install all project dependencies with `npm install`
-* start the development server with `npm start`
+* Start the server with `npm start` 
+
+The app will run automatically in your local host. 
 
 ## React App
 
