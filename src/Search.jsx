@@ -24,14 +24,16 @@ class Search extends Component {
         }
     }
 
-    sendChange = (book,value) => {
-
-        this.props.changeShelf({
-                                 title: book.title,
-                                 author: book.authors,
-                                 url: book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193?text=?)'
-                                }, value)
-    }
+    // sendChange = (book,value) => {
+    //     let link
+    //     book.imageLinks ? link = book.imageLinks.thumbnail : link = 'http://via.placeholder.com/128x193?text=?)'
+    //     let newBook = {
+    //         title: book.title,
+    //         author: book.authors,
+    //         url: link
+    //     }
+    //     this.props.changeShelf(newBook, value)
+    // }
 
     render() {
         let {query,showingBooks} = this.state
@@ -68,7 +70,7 @@ class Search extends Component {
                                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(http://via.placeholder.com/128x193?text=?)'}}></div>
                                         }
                                         {book.shelf= 'none'}
-                                        <BookControl controlShelf={(book,value) => (this.sendChange(book,value))}  book={book}/>
+                                        <BookControl controlShelf={(book,value) => (this.props.sendChange(book,value))}  book={book}/>
                                     </div>
                                     <div className="book-title">{book.title}</div>
                                     <div className="book-authors">{book.authors}</div>

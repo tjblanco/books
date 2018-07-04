@@ -1,15 +1,14 @@
 import React, {Component} from 'react'
 
 class BookControl extends Component {
-    manageClick(value) {
-        console.log(value)
-        console.log(this.props.book)
-        this.props.controlShelf(this.props.book,value)
+    manageClick(e) {
+        e.preventDefault()
+        this.props.controlShelf(this.props.book,e.target.value)
     }
     render() {
         return(
             <div className="book-shelf-changer">
-                <select onChange={(e) => this.manageClick(e.target.value)}>
+                <select onChange={(e) => this.manageClick(e)}>
                     <option  value="move" disabled>Move to...</option>
                     <option  value="currentlyReading" selected={this.props.book.shelf === 'currentlyReading'}>Currently Reading</option>
                     <option  value="wantToRead" selected={this.props.book.shelf === 'wantToRead'}>Want to Read</option>

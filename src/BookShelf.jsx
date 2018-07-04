@@ -3,8 +3,6 @@ import BookControl from './BookControl.jsx'
 
 class BookShelf extends Component {
     sendChange = (book,value) => {
-        console.log(book)
-        console.log(value)
         this.props.changeShelf(book,value)
     }
     render() {

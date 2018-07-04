@@ -53,7 +53,7 @@ class BooksApp extends React.Component {
         ]
     }
     changeShelf = (book,value) => {
-        console.log(book.title)
+        let newBook
         switch (value) {
             case 'none':
                 this.setState((state) => ({
@@ -61,24 +61,59 @@ class BooksApp extends React.Component {
                 }))
                 break
             case 'currentlyReading':
+                newBook = {
+                    title: book.title,
+                    author: book.author,
+                    shelf: value,
+                    url: book.url
+                }
                 this.setState((state) => ({
-                    books: state.books.filter((b) => b.title !== book.title).push({
-                        title: book.tile,
-                        author: book.authors,
-                        shelf: 'reading',
-                        url: book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193?text=?'
-                    })
+                    books: state.books.filter((b) => b.title !== book.title).concat(newBook)
+                }))
+                break
+            case 'wantToRead':
+                newBook = {
+                    title: book.title,
+                    author: book.author,
+                    shelf: value,
+                    url: book.url
+                }
+                this.setState((state) => ({
+                    books: state.books.filter((b) => b.title !== book.title).concat(newBook)
+                }))
+                break
+            case 'read':
+                newBook = {
+                    title: book.title,
+                    author: book.author,
+                    shelf: value,
+                    url: book.url
+                }
+                this.setState((state) => ({
+                    books: state.books.filter((b) => b.title !== book.title).concat(newBook)
                 }))
                 break
         }
+
     }
   render() {
     return (
 
       <div className="app">
 
-        <Route path='/search' render={() => (
-            <Search />
+        <Route path='/search' render={({history}) => (
+            <Search
+                sendChange={(book,value) => {
+                    let link
+                    book.imageLinks ? link = book.imageLinks.thumbnail : link = 'http://via.placeholder.com/128x193?text=?)'
+                    let newBook = {
+                        title: book.title,
+                        author: book.authors,
+                        url: link
+                    }
+                    this.changeShelf(newBook, value)
+                    history.push('/')
+                }} />
         )}/>
 
         <Route exact path='/' render={() => (
