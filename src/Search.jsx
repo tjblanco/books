@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI.js'
+import BookControl from './BookControl.jsx'
 
 class Search extends Component {
     state = {
@@ -23,6 +24,14 @@ class Search extends Component {
         }
     }
 
+    sendChange = (book,value) => {
+
+        this.props.changeShelf({
+                                 title: book.title,
+                                 author: book.authors,
+                                 url: book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193?text=?)'
+                                }, value)
+    }
 
     render() {
         let {query,showingBooks} = this.state
@@ -50,7 +59,7 @@ class Search extends Component {
                 <div className="search-books-results">
                     <ol className="books-grid">
                         {showingBooks.map((book) => (
-                            <li>
+                            <li key={book.title}>
                                 <div className="book">
                                     <div className="book-top">
                                         {book.imageLinks ?
@@ -58,16 +67,8 @@ class Search extends Component {
 
                                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(http://via.placeholder.com/128x193?text=?)'}}></div>
                                         }
-
-                                        <div className="book-shelf-changer">
-                                            <select>
-                                                <option value="move" disabled>Move to...</option>
-                                                <option value="currentlyReading">Currently Reading</option>
-                                                <option value="wantToRead">Want to Read</option>
-                                                <option value="read">Read</option>
-                                                <option value="none">None</option>
-                                            </select>
-                                        </div>
+                                        {book.shelf= 'none'}
+                                        <BookControl controlShelf={(book,value) => (this.sendChange(book,value))}  book={book}/>
                                     </div>
                                     <div className="book-title">{book.title}</div>
                                     <div className="book-authors">{book.authors}</div>
